@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "dataiku-mlops"
 version = "0.1.0"
-description = "Makes MLOps with Dataiku easier by reusing functions"
-authors = ["Aniket Mishrikotkar"]
+description = ""
+authors = ["Aniket Mishrikotkar <aniketmishrikotkar@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
