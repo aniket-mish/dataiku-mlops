@@ -1,9 +1,13 @@
 [tool.poetry]
 name = "dataiku-mlops"
 version = "0.1.0"
-description = ""
+description = "MLOps API Client for Dataiku Data Science Studio"
+license = "MIT"
 authors = ["Aniket Mishrikotkar <aniketmishrikotkar@gmail.com>"]
+maintainers = ["Aniket Mishrikotkar <aniketmishrikotkar@gmail.com>"]
 readme = "README.md"
+homepage = ""
+repository = ""
 
 [tool.poetry.dependencies]
 python = "^3.10"
