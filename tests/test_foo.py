@@ -1,4 +1,4 @@
-"""Foo unit test file."""  
+"""Foo unit test file."""
 
 from dataiku_mlops.foo import foo
 

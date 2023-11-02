@@ -1,5 +1,5 @@
-import dataikuapi
 from loguru import logger
+
 
 def foo() -> str:
     """Summary line.
@@ -13,6 +13,6 @@ def foo() -> str:
         str: Description of return value
     """
 
-    logger.info(f"foo function called")
+    logger.info("foo function called.")
 
     return "foo"
