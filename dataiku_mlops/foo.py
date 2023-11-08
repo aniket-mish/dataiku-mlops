@@ -1,13 +1,13 @@
 from loguru import logger
 
 
-def foo() -> str:
+def foo(arg1) -> str:
     """Summary line.
 
     Extended description of function.
 
     Args:
-        foo (str): Description of arg1
+        arg1: Description of arg1
 
     Returns:
         str: Description of return value
