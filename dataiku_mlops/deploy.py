@@ -29,19 +29,45 @@ class DSSDeployer:
             previous_bundle_id = settings.get_raw()["bundleId"]
             logger.info(f"Previous bundle id: {previous_bundle_id}")
             settings.get_raw()["bundleId"] = self.bundle_id
+
+            settings.save()
         else:
             logger.info("No deployment found. Creating a new one.")
-            # TODO create deployment
 
-        return "deploy"
+            deployment = MLOpsUtils.create_deployment(
+                deployment_id=f"{self.project_key}-on-{self.infra_id}",
+                project_key=self.project_key,
+                infra_id=self.infra_id,
+                bundle_id=self.bundle_id,
+            )
 
-    def rollback(self) -> object:
+        logger.info(f"Deployment ready to update: {deployment.id}")
+        update_execution = deployment.start_update()
+        logger.info(f"Deployment updated: {update_execution.get_state()}")
+        update_execution.wait_for_result()
+        deployment_result = update_execution.get_result()
+        logger.info(f"Deployment result: {deployment_result}")
+
+        return deployment
+
+    def rollback(self) -> str:
         """
         Rollback to the previous deployment
         """
 
-        # TODO get previous bundle id
+        previous_bundle_id = MLOpsUtils.get_previous_bundle_id()
 
-        # TODO update deployment
+        if previous_bundle_id is not None:
+            logger.error("Rollback not possible. Please fix it manually.")
 
-        return "rollback"
+        else:
+            logger.info("Rollback to the previous deployment")
+            MLOpsUtils.set_bundle_id(previous_bundle_id)
+            deployment = MLOpsUtils.get_deployment()
+            update_execution = deployment.start_update()
+            update_execution.wait_for_result()
+            logger.info(f"Deployment updated: {update_execution.get_state()}")
+            deployment_result = update_execution.get_result()
+            logger.info(f"Deployment result: {deployment_result}")
+
+        return "Rollback done"

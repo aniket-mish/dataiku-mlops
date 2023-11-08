@@ -20,6 +20,18 @@ class MLOpsUtils:
         deployments = project.get_status().get_deployments(self.infra_id)
         return deployments[0]
 
+    def get_settings(self) -> object:
+        """
+        Get the settings of the deployment
+        """
+        return self.get_deployment().get_settings()
+
+    def get_projectdeployer(self) -> object:
+        """
+        Get the project deployer
+        """
+        return self.client.get_projectdeployer()
+
     def set_bundle_id(self):
         """
         Set the bundle id
