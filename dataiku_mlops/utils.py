@@ -6,7 +6,9 @@ class DSSHelper:
     Utility class for MLOps
     """
 
-    def __init__(self, client, project_key, infra_id, bundle_id):
+    def __init__(
+        self, client: object, project_key: str, infra_id: str, bundle_id: str
+    ) -> None:
         self.client = client
         self.project_key = project_key
         self.infra_id = infra_id
@@ -33,32 +35,22 @@ class DSSHelper:
         """
         return self.client.get_projectdeployer()
 
-    def set_bundle_id(self):
+    def set_bundle_id(self) -> None:
         """
         Set the bundle id
         """
         self.get_deployment().get_settings().get_raw()["bundleId"] = self.bundle_id
 
-    def get_previous_bundle_id(self):
+    def get_previous_bundle_id(self) -> str:
         """
         Get the previous bundle id
         """
         return self.get_deployment().get_settings().get_raw()["bundleId"]
 
-    def create_deployment(self):
+    def create_deployment(self) -> object:
         """
         Create a deployment
         """
         project_deployer = self.get_projectdeployer()
         project = project_deployer.get_project(self.project_key)
-        return project.create_deployment(
-            deployment_id=f"{self.project_key}-on-{self.infra_id}",
-            infra_id=self.infra_id,
-            bundle_id=self.bundle_id,
-        )
-
-    def update_deployment(self):
-        """
-        Update a deployment
-        """
-        pass
+        return project.create_deployment(self.infra_id, self.bundle_id)

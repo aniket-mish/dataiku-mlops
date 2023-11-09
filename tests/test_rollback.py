@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from dataiku_mlops.rollback import DSSRollback
-from dataiku_mlops.dssclient import DSSClient
 from dataiku_mlops.utils import DSSHelper
+from dataiku_mlops.dssclient import DSSClient
 
 
 @patch.object(DSSClient, "dssclient")
@@ -16,7 +16,7 @@ def test_rollback_exception_raised(
     mock_get_previous_bundle_id.return_value = "previous_bundle_id"
 
     # Test rollback with previous bundle
-    rollback = DSSRollback("host", "api_key", "project_key", "infra_id")
+    rollback = DSSRollback("host", "api_key", "project_key", "infra_id", "bundle_id")
     with pytest.raises(
         Exception, match="Rollback not possible. Please fix it manually."
     ):
@@ -39,7 +39,7 @@ def test_rollback_successful(
     mock_deployment.start_update.return_value = mock_update_execution
 
     # Test rollback without previous bundle
-    rollback = DSSRollback("host", "api_key", "project_key", "infra_id")
+    rollback = DSSRollback("host", "api_key", "project_key", "infra_id", "bundle_id")
     result = rollback.rollback()
     assert result == "Rollback done"
     mock_set_bundle_id.assert_called_once()
