@@ -1,15 +1,16 @@
 """This file contains utility functions for the plugin."""
 
 
-class MLOpsUtils:
+class DSSHelper:
     """
     Utility class for MLOps
     """
 
-    def __init__(self, client, project_key, infra_id):
+    def __init__(self, client, project_key, infra_id, bundle_id):
         self.client = client
         self.project_key = project_key
         self.infra_id = infra_id
+        self.bundle_id = bundle_id
 
     def get_deployment(self) -> object:
         """

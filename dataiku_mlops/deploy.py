@@ -1,6 +1,6 @@
 from loguru import logger
 from dataiku_mlops.dssclient import DSSClient
-from dataiku_mlops.utils import MLOpsUtils
+from dataiku_mlops.utils import DSSHelper
 
 
 class DSSDeployer:
@@ -13,12 +13,13 @@ class DSSDeployer:
         self.project_key = project_key
         self.infra_id = infra_id
         self.bundle_id = bundle_id
+        self.utils = DSSHelper(self.client, self.project_key, self.infra_id)
 
     def deploy(self) -> object:
         """
         Create a deployment
         """
-        deployment = MLOpsUtils(
+        deployment = DSSHelper(
             self.client, self.project_key, self.infra_id
         ).get_deployment()
 
@@ -34,7 +35,7 @@ class DSSDeployer:
         else:
             logger.info("No deployment found. Creating a new one.")
 
-            deployment = MLOpsUtils.create_deployment(
+            deployment = self.utils.create_deployment(
                 deployment_id=f"{self.project_key}-on-{self.infra_id}",
                 project_key=self.project_key,
                 infra_id=self.infra_id,

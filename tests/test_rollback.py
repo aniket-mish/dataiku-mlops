@@ -2,16 +2,16 @@ import pytest
 from unittest.mock import patch, MagicMock
 from dataiku_mlops.rollback import DSSRollback
 from dataiku_mlops.dssclient import DSSClient
-from dataiku_mlops.utils import MLOpsUtils
+from dataiku_mlops.utils import DSSHelper
 
 
 @patch.object(DSSClient, "dssclient")
-@patch.object(MLOpsUtils, "get_previous_bundle_id")
-@patch.object(MLOpsUtils, "get_deployment")
+@patch.object(DSSHelper, "get_previous_bundle_id")
+@patch.object(DSSHelper, "get_deployment")
 def test_rollback_exception_raised(
     mock_get_deployment, mock_get_previous_bundle_id, mock_dssclient
 ):
-    # Mock the DSSClient and MLOpsUtils
+    # Mock the DSSClient and DSSHelper
     mock_dssclient.return_value = MagicMock()
     mock_get_previous_bundle_id.return_value = "previous_bundle_id"
 
@@ -24,13 +24,13 @@ def test_rollback_exception_raised(
 
 
 @patch.object(DSSClient, "dssclient")
-@patch.object(MLOpsUtils, "get_previous_bundle_id")
-@patch.object(MLOpsUtils, "set_bundle_id")
-@patch.object(MLOpsUtils, "get_deployment")
+@patch.object(DSSHelper, "get_previous_bundle_id")
+@patch.object(DSSHelper, "set_bundle_id")
+@patch.object(DSSHelper, "get_deployment")
 def test_rollback_successful(
     mock_get_deployment, mock_set_bundle_id, mock_get_previous_bundle_id, mock_dssclient
 ):
-    # Mock the DSSClient and MLOpsUtils
+    # Mock the DSSClient and DSSHelper
     mock_dssclient.return_value = MagicMock()
     mock_get_previous_bundle_id.return_value = None
     mock_deployment = MagicMock()
