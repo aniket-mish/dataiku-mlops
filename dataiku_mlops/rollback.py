@@ -16,9 +16,7 @@ class DSSRollback:
         """
         Rollback to the previous deployment
         """
-
         previous_bundle_id = self.utils.get_previous_bundle_id()
-
         if previous_bundle_id is not None:
             raise Exception("Rollback not possible. Please fix it manually.")
         else:

@@ -1,9 +1,6 @@
-"""This file contains utility functions for the plugin."""
-
-
 class DSSHelper:
     """
-    Utility class for MLOps
+    This class contains utility methods
     """
 
     def __init__(

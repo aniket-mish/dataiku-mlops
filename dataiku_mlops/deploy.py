@@ -15,41 +15,35 @@ class DSSDeployer:
         self.project_key = project_key
         self.infra_id = infra_id
         self.bundle_id = bundle_id
-        self.utils = DSSHelper(self.client, self.project_key, self.infra_id)
+        self.utils = DSSHelper(self.client, project_key, infra_id, bundle_id)
+
+    def get_deployment_status(deployment) -> object:
+        """
+        Get the deployment status
+        """
+        logger.info(f"Deployment ready to update: {deployment.id}")
+        update_execution = deployment.start_update()
+        logger.info(f"Deployment updated: {update_execution.get_state()}")
+        update_execution.wait_for_result()
+        deployment_result = update_execution.get_result()
+        logger.info(f"Deployment result: {deployment_result}")
+        return deployment_result
 
     def deploy(self) -> object:
         """
         Create a deployment
         """
         deployment = self.utils.get_deployment()
-
         if deployment is not None:
             logger.info(f"Deployment found: {deployment}")
-
             settings = deployment.get_settings()
             previous_bundle_id = settings.get_raw()["bundleId"]
             logger.info(f"Previous bundle id: {previous_bundle_id}")
             settings.get_raw()["bundleId"] = self.bundle_id
-
             settings.save()
-
-            logger.info(f"Deployment ready to update: {deployment.id}")
-            update_execution = deployment.start_update()
-            logger.info(f"Deployment updated: {update_execution.get_state()}")
-            update_execution.wait_for_result()
-            deployment_result = update_execution.get_result()
-            logger.info(f"Deployment result: {deployment_result}")
-
+            deployment_result = self.get_deployment_status(deployment)
         else:
             logger.info("No deployment found. Creating a new one.")
-
             deployment = self.utils.create_deployment()
-
-            logger.info(f"Deployment ready to update: {deployment.id}")
-            update_execution = deployment.start_update()
-            logger.info(f"Deployment updated: {update_execution.get_state()}")
-            update_execution.wait_for_result()
-            deployment_result = update_execution.get_result()
-            logger.info(f"Deployment result: {deployment_result}")
-
+            deployment_result = self.get_deployment_status(deployment)
         return deployment_result
