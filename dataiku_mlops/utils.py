@@ -48,7 +48,13 @@ class MLOpsUtils:
         """
         Create a deployment
         """
-        pass
+        project_deployer = self.get_projectdeployer()
+        project = project_deployer.get_project(self.project_key)
+        return project.create_deployment(
+            deployment_id=f"{self.project_key}-on-{self.infra_id}",
+            infra_id=self.infra_id,
+            bundle_id=self.bundle_id,
+        )
 
     def update_deployment(self):
         """
