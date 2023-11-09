@@ -1,1 +1,1 @@
-This project aims to make your MLOps pipeline for Dataiku projects simple.
+Reusable component in the MLOps toolbox for Dataiku projects.
