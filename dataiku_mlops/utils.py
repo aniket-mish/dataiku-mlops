@@ -55,27 +55,3 @@ class MLOpsUtils:
         Update a deployment
         """
         pass
-
-
-class DSSInfoMessage:
-    """
-    Class to handle info messages
-    """
-
-    def __init__(self, message):
-        self.message = message
-
-    def __str__(self):
-        return f"INFO: {self.message}"
-
-
-class DSSProjectStatus:
-    """
-    Class to handle project status
-    """
-
-    def __init__(self, status):
-        self.status = status
-
-    def __str__(self):
-        return f"Project status: {self.status}"
