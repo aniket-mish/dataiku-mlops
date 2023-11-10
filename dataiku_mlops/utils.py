@@ -1,4 +1,4 @@
-class DSSHelper:
+class Helper:
     """
     This class contains utility methods
     """

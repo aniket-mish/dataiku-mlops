@@ -1,9 +1,9 @@
 from loguru import logger
-from dataiku_mlops.dssclient import DSSClient
-from dataiku_mlops.utils import DSSHelper
+from dataiku_mlops.client import Client
+from dataiku_mlops.utils import Helper
 
 
-class DSSDeployer:
+class Deploy:
     """
     Handle to interact with the DSS Deployer
     """
@@ -11,13 +11,13 @@ class DSSDeployer:
     def __init__(
         self, host: str, api_key: str, project_key: str, infra_id: str, bundle_id: str
     ):
-        self.client = DSSClient(host, api_key).dssclient()
+        self.client = Client(host, api_key).client()
         self.project_key = project_key
         self.infra_id = infra_id
         self.bundle_id = bundle_id
-        self.utils = DSSHelper(self.client, project_key, infra_id, bundle_id)
+        self.utils = Helper(self.client, project_key, infra_id, bundle_id)
 
-    def get_deployment_status(deployment) -> object:
+    def get_deployment_status(self, deployment) -> object:
         """
         Get the deployment status
         """

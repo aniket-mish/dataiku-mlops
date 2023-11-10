@@ -1,16 +1,16 @@
 from loguru import logger
-from dataiku_mlops.utils import DSSHelper
-from dataiku_mlops.dssclient import DSSClient
+from dataiku_mlops.utils import Helper
+from dataiku_mlops.client import Client
 
 
-class DSSRollback:
+class Rollback:
     def __init__(
         self, host: str, api_key: str, project_key: str, infra_id: str, bundle_id: str
     ):
-        self.client = DSSClient(host, api_key).dssclient()
+        self.client = Client(host, api_key).client()
         self.project_key = project_key
         self.infra_id = infra_id
-        self.utils = DSSHelper(self.client, self.project_key, self.infra_id, bundle_id)
+        self.utils = Helper(self.client, self.project_key, self.infra_id, bundle_id)
 
     def rollback(self) -> str:
         """
